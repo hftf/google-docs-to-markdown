@@ -11,6 +11,8 @@ const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
+inputElement.focus();
+
 // Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
 // format) globally so we can re-use it if the user hand-edits the input.
 let latestSliceClip = null;
