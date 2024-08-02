@@ -2,6 +2,9 @@
 
 This is a very minimal webapp for converting a Google Doc to Markdown. It uses [Remark](https://github.com/remarkjs/remark) and [Rehype](https://github.com/rehypejs/rehype) (both part of [Unified](https://unifiedjs.github.io)) to do the conversion.
 
+Forked to support underlines and other useful modifications for pasting quizbowl questions into Discord.
+
+![image](https://github.com/user-attachments/assets/280cf370-00b4-44a3-9e98-afa2bf317ece)
 
 ## Live Demo
 
