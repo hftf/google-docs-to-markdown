@@ -11,6 +11,8 @@ const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
+const spoilerCheckbox = document.getElementById('spoiler-checkbox');
+
 inputElement.focus();
 
 // Hold most recently pasted Slice Clip (the Google Docs internal copy/paste
@@ -38,7 +40,11 @@ inputElement.addEventListener('input', () => {
   const hasContent = !!inputElement.textContent;
   inputInstructions.style.display = hasContent ? 'none' : '';
 
-  convertDocsHtmlToMarkdown(inputElement.innerHTML, latestSliceClip)
+  convertDocsHtmlToMarkdown(
+    inputElement.innerHTML,
+    latestSliceClip,
+	spoilerCheckbox.checked
+  )
     .then((markdown) => {
       outputElement.value = markdown;
       outputInstructions.style.display = markdown.trim() ? 'none' : '';
@@ -47,6 +53,26 @@ inputElement.addEventListener('input', () => {
       console.error(error);
       outputInstructions.style.display = '';
     });
+});
+
+spoilerCheckbox.addEventListener('change', (event) => {
+  if (!inputElement.textContent) {
+    return;
+  }
+
+  outputElement.value = convertDocsHtmlToMarkdown(
+    inputElement.innerHTML,
+    latestSliceClip,
+    spoilerCheckbox.checked
+  )
+  .then((markdown) => {
+	outputElement.value = markdown;
+	outputInstructions.style.display = markdown.trim() ? 'none' : '';
+  })
+  .catch((error) => {
+	console.error(error);
+	outputInstructions.style.display = '';
+  });
 });
 
 window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
