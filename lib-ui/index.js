@@ -13,8 +13,6 @@ const outputElement = document.getElementById('output');
 const inputInstructions = document.querySelector('#input-area .instructions');
 const outputInstructions = document.querySelector('#output-area .instructions');
 
-const spoilerCheckbox = document.getElementById('spoiler-checkbox');
-
 inputElement.focus();
 
 function convert() {
@@ -59,26 +57,6 @@ inputElement.addEventListener('input', () => {
   inputInstructions.style.display = hasContent ? 'none' : '';
 
   convert();
-});
-
-spoilerCheckbox.addEventListener('change', (event) => {
-  if (!inputElement.textContent) {
-    return;
-  }
-
-  outputElement.value = convertDocsHtmlToMarkdown(
-    inputElement.innerHTML,
-    latestSliceClip,
-    spoilerCheckbox.checked
-  )
-  .then((markdown) => {
-	outputElement.value = markdown;
-	outputInstructions.style.display = markdown.trim() ? 'none' : '';
-  })
-  .catch((error) => {
-	console.error(error);
-	outputInstructions.style.display = '';
-  });
 });
 
 window.convertDocsHtmlToMarkdown = convertDocsHtmlToMarkdown;
