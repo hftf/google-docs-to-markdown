@@ -124,6 +124,11 @@
         font-weight: normal;
         text-decoration: none;
       }
+
+      #settings {
+        display: flex;
+        gap: 1.25em;
+      }
     </style>
   </head>
   <body>
@@ -131,13 +136,13 @@
       <h1>Convert Google Docs to Markdown</h1>
 
       <form id="settings">
-        <span title="Settings">⚙️</span>
+        <strong title="Settings">Settings:</strong>
         <label>
           Suggested changes:
           <select name="suggestions">
-            <option value="show">Show suggestions</option>
-            <option value="accept">Accept/use suggestions</option>
-            <option value="reject">Reject/ignore suggestions</option>
+            <option value="show"  >Show (strike deletions, underline insertions)</option>
+            <option value="accept">Accept (apply suggestions)</option>
+            <option value="reject">Reject (ignore suggestions)</option>
           </select>
         </label>
         <label>
