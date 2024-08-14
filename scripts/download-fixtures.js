@@ -5,8 +5,10 @@ import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-// We need this for Node.js 16. It's built-in on v18+, so remove if updating.
-import { fetch } from 'undici';
+import {
+  formatDiffableHtml,
+  formatDiffableGdocsSliceClip,
+} from '../test/support/fixtures.js';
 
 const COMMAND_KEY = process.platform === 'darwin' ? 'Meta' : 'Control';
 const FIXTURE_PATH = '../test/fixtures';
@@ -15,6 +17,8 @@ const FIXTURES = {
   'code-blocks-mixed': '1D56ytnyzkCG-OSn6m83B5JxPjwgZ05iSSUUbLuYzmzc',
   'code-inline': '1bEp38sjESFK8q1PLwfesZgNDMwEsqeGulaq4Vb7r9IA',
   'headings-and-paragraphs': '1Dm5DIHOVAvsGYgTaPuhq78PefT_5u10RFsRBxunxBtQ',
+  'headings-with-inline-formatting':
+    '1tZ7s7liAh5l-w7Eu7Meej9JfMpUItnyJ3q2yC6juB3c',
   'inline-formatting': '1-0E8y62m1tI6MWYYbGcbBALylL9hT9Toq9SssCeT-Ew',
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0',
   'list-item-level-styling': '10W_0kk4mBViHMIahKcg4WwBu-HLCyw12BG7NC2lyuA8',
@@ -22,6 +26,7 @@ const FIXTURES = {
   'linebreaks-at-the-end-of-links':
     '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
   'internal-links': '1Y4u0ZfjCLGB1nwg7aAw3f0QOD_ZAWak-AO-sbUtihco',
+  'suggestions': '1asWcI-BcMp5kivAupimw7Ndb0PiQ_l2dNVzVdGfdzKU',
 };
 const DOCUMENT_SLICE_CLIP_TYPE =
   'application/x-vnd.google-docs-document-slice-clip+wrapped';
@@ -336,17 +341,19 @@ async function downloadFixtures(destination) {
       let copied = await getCopiedGoogleDocHtml(browser, id);
       await writeFile(
         path.join(destination, `${name}.copy.html`),
-        cleanCopiedHtml(copied.html),
+        formatDiffableHtml(cleanCopiedHtml(copied.html)),
         { encoding: 'utf-8' }
       );
       await writeFile(
         path.join(destination, `${name}.copy.gdocsliceclip.json`),
-        cleanDocumentSliceClip(copied.documentSliceClip),
+        formatDiffableGdocsSliceClip(
+          cleanDocumentSliceClip(copied.documentSliceClip)
+        ),
         { encoding: 'utf-8' }
       );
 
       let exported = await getExportedGoogleDocHtml(id);
-      exported = cleanExportedHtml(exported);
+      exported = formatDiffableHtml(cleanExportedHtml(exported));
       await writeFile(path.join(destination, `${name}.export.html`), exported, {
         encoding: 'utf-8',
       });

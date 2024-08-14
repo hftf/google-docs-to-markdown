@@ -6,6 +6,13 @@ Forked to support underlines and other useful modifications for pasting quizbowl
 
 ![image](https://github.com/user-attachments/assets/280cf370-00b4-44a3-9e98-afa2bf317ece)
 
+To deploy:
+
+```sh
+npm run build
+scp dist/* <path>
+```
+
 ## Live Demo
 
 - https://mr0grog.github.io/google-docs-to-markdown/
