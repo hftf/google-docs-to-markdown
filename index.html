@@ -175,7 +175,7 @@
         <label>
           Suggested changes:
           <select name="suggestions">
-            <option value="show"  >Show (strike deletions, underline insertions)</option>
+            <option value="show"  >Mark up (strike deletions, underline insertions)</option>
             <option value="accept">Accept (apply suggestions)</option>
             <option value="reject">Reject (ignore suggestions)</option>
           </select>
@@ -186,6 +186,15 @@
           <select name="underline">
             <option value="underscore">__ (Discord Markdown)</option>
             <option value="html">&lt;u> (raw HTML tag)</option>
+          </select>
+        </label>
+
+        <label>
+          Line breaking:
+          <select name="linebreaking">
+            <option value="one">single newline (Discord Markdown)</option>
+            <option value="backslash">backslash and newline (standard Markdown line breaks)</option>
+            <option value="two">two newlines (standard Markdown paragraphs)</option>
           </select>
         </label>
 
