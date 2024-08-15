@@ -153,6 +153,7 @@
       <form id="settings">
         <strong title="Settings">Settings:</strong>
 
+        <!--
         <label>
           Linkable Headings:
           <select name="headingIds">
@@ -169,6 +170,7 @@
             <option value="fenced">Fenced (```)</option>
           </select>
         </label>
+        -->
 
         <label>
           Suggested changes:
@@ -176,6 +178,14 @@
             <option value="show"  >Show (strike deletions, underline insertions)</option>
             <option value="accept">Accept (apply suggestions)</option>
             <option value="reject">Reject (ignore suggestions)</option>
+          </select>
+        </label>
+
+        <label>
+          Underline markup:
+          <select name="underline">
+            <option value="underscore">__ (Discord Markdown)</option>
+            <option value="html">&lt;u> (raw HTML tag)</option>
           </select>
         </label>
 

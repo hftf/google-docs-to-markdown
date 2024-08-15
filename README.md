@@ -13,6 +13,8 @@ npm run build
 scp dist/* <path>
 ```
 
+Patches required to dependencies: https://gist.github.com/hftf/e70552a50a0f947fc4ceb8aa0376ab1e
+
 ## Live Demo
 
 - https://mr0grog.github.io/google-docs-to-markdown/
