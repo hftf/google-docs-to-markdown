@@ -1,13 +1,14 @@
 This is a test of block-level code formatting.
 
-    Consecutive lines
-    That are monospaced,
-    Whether multi-paragraph or not,
-    Are turned into code blocks.
+```
+Consecutive lines
+That are monospaced,
+Whether multi-paragraph or not,
+Are turned into code blocks.
+```
 
 Also, actual “code blocks” become Markdown code blocks:
 
-<!-- Fences are always used if we have a language tag! -->
 ```javascript
 for (const i = 0; i < someList.length; i++) {
   doSomething(someList[i]);
@@ -18,6 +19,8 @@ for (const i = 0; i < someList.length; i++) {
 
 And a block with no language:
 
-    let whatever = "hello"
+```
+let whatever = "hello"
+```
 
 OK?

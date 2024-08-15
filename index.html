@@ -42,6 +42,21 @@
         padding: 0;
       }
 
+      #settings {
+        font-size: 0.75rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        gap: 1em;
+      }
+
+      #settings input,
+      #settings select {
+        font-size: inherit;
+      }
+
       .input-field {
         border: 1px solid #ccc;
         font-size: 1em;
@@ -137,6 +152,24 @@
 
       <form id="settings">
         <strong title="Settings">Settings:</strong>
+
+        <label>
+          Linkable Headings:
+          <select name="headingIds">
+            <option value="hidden">None</option>
+            <option value="html">Plain Markdown (HTML)</option>
+            <option value="extended">Extended Markdown</option>
+          </select>
+        </label>
+
+        <label>
+          Code Blocks:
+          <select name="codeBlocks">
+            <option value="indented">Indented</option>
+            <option value="fenced">Fenced (```)</option>
+          </select>
+        </label>
+
         <label>
           Suggested changes:
           <select name="suggestions">
@@ -145,6 +178,7 @@
             <option value="reject">Reject (ignore suggestions)</option>
           </select>
         </label>
+
         <label>
           <input name="spoiler" type="checkbox" />
           Add spoiler tags (experimental)
