@@ -143,6 +143,12 @@
         display: flex;
         gap: 1.25em;
       }
+
+      /* Make bookmarks visible in the input area. */
+      #input a[id^="id."]:before,
+      #input a[name^="id."]:before {
+        content: "※ "
+      }
     </style>
   </head>
   <body>
