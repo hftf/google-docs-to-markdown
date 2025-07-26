@@ -22,6 +22,7 @@ const FIXTURES = {
   'inline-formatting': '1-0E8y62m1tI6MWYYbGcbBALylL9hT9Toq9SssCeT-Ew',
   'lists': '1bZI3NwaasFZGexGQG9YC07UAovpY9b_mfdI2_KgT8-0',
   'list-item-level-styling': '10W_0kk4mBViHMIahKcg4WwBu-HLCyw12BG7NC2lyuA8',
+  'non-text-between-code': '1m83z9i4tSnKw3vWsW3x7RNKMmWEyY_SqNERH0G4k2v0',
   'tables': '1sdDeTF4uEwAlp6VDx_Jk_yJYS0wtnOWj0J63aSU3zsQ',
   'linebreaks-at-the-end-of-links':
     '1YES2UjSQV16TOWhVT0fXoXvYTwrtdcKcO8kxr4-9yPs',
@@ -31,6 +32,13 @@ const FIXTURES = {
 };
 const DOCUMENT_SLICE_CLIP_TYPE =
   'application/x-vnd.google-docs-document-slice-clip+wrapped';
+
+// Asset URLs (for images in docs) involve a user-specific key, so each time
+// we anonymously copy a fixture we get a different URL. Replace the key with
+// with this one for consistent fixtures.
+const USER_ASSET_KEY =
+  'AD_4nXfOUdieC9bo7QjPnX1ROFNOXtJPZ9xPJAQ7qhlBzsNmw8XuSlVJi-vFeFNs9mXCoDB10pBicZwOpqO5bsEYsIPc_' +
+  'lcCDIsWfGVw18r6kSA9nygfvJsTB44V8E5OU80p5Ts';
 
 function googleDocUrl(documentId) {
   return `https://docs.google.com/document/d/${documentId}`;
@@ -188,10 +196,11 @@ async function getExportedGoogleDocHtml(documentId) {
 function cleanCopiedHtml(html) {
   // Google Docs adds a unique GUID to every copy operation. Overwrite it
   // so we only track meaningful changes to the content of the fixture.
-  return html.replace(
+  let clean = html.replace(
     /id="docs-internal-guid-\w{8}-\w{4}-\w{4}-\w{4}-\w{12}"/,
     `id="docs-internal-guid-dddddddd-dddd-dddd-dddd-123456789abc"`
   );
+  return cleanHtmlAssetUrls(clean);
 }
 
 /**
@@ -302,7 +311,24 @@ function cleanExportedHtml(html) {
     throw error;
   }
 
+  reformatted = cleanHtmlAssetUrls(reformatted);
+
   return reformatted;
+}
+
+/**
+ * Fix up asset URLs in copied and exported HTML. Assets (e.g. images) in docs
+ * HTML use a URL that includes a user-specific key, so may be unique for every
+ * session where we load fixtures. This replaces the unique part with something
+ * consistent.
+ * @param {string} html HTML string to clean up.
+ * @returns {string}
+ */
+function cleanHtmlAssetUrls(html) {
+  return html.replace(
+    /(<img [^>]*src="https:\/\/[^/]*googleusercontent.com\/docsz\/)[^?]+(\?key=[^"]+")/g,
+    (_, prefix, suffix) => `${prefix}${USER_ASSET_KEY}${suffix}`
+  );
 }
 
 /**
@@ -369,10 +395,7 @@ function listFixtures() {
 
 // Main logic!
 const { values, positionals } = parseArgs({
-  options: {
-    help: { type: 'boolean', short: 'h' },
-    list: { type: 'boolean' },
-  },
+  options: { help: { type: 'boolean', short: 'h' }, list: { type: 'boolean' } },
 });
 
 if (values.help) {

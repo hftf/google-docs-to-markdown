@@ -99,6 +99,9 @@ describe('convert', () => {
     options: { headingIds: 'html' },
   });
 
+  createFixtureTest('non-text-between-code', { type: 'copy' });
+  createFixtureTest('non-text-between-code', { type: 'export', skip: true });
+
   // At current, it doesn't seem like this situation can happen in a Google Doc,
   // but it's worth supporting just in case things change or users want to
   // convert more arbitrary HTML.
@@ -202,5 +205,15 @@ describe('convert', () => {
           .replace(/^[\t\u0020]+/gm, '')
       );
     });
+  });
+
+  it('removes browser-added fragment markers', async () => {
+    let md = await convertDocsHtmlToMarkdown(`
+      <!--StartFragment-->
+      <p>This is a test paragraph</p>
+      <!--EndFragment-->
+    `);
+
+    expect(md).toEqual('This is a test paragraph\n');
   });
 });
