@@ -56,6 +56,9 @@
       #settings select {
         font-size: inherit;
       }
+      #settings select {
+        width: 13em;
+      }
 
       .input-field {
         border: 1px solid #ccc;
@@ -198,14 +201,14 @@
           Line breaking:
           <select name="linebreaking">
             <option value="one">single newline (Discord Markdown)</option>
-            <option value="backslash">backslash and newline (standard Markdown line breaks)</option>
+            <option value="backslash">backslash newline (standard Markdown line breaks)</option>
             <option value="two">two newlines (standard Markdown paragraphs)</option>
           </select>
         </label>
 
         <label>
           <input name="spoiler" type="checkbox" />
-          Add spoiler tags (and pad answers)
+          Add spoiler tags, pad answers with spaces, and move bonus difficulties to end
         </label>
       </form>
     </header>
