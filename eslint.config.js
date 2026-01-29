@@ -1,7 +1,7 @@
 import compat from 'eslint-plugin-compat';
 import globals from 'globals';
 import js from '@eslint/js';
-import stylisticJs from '@stylistic/eslint-plugin-js';
+import stylistic from '@stylistic/eslint-plugin';
 
 export default [
   {
@@ -23,18 +23,18 @@ export default [
 
     settings: {
       browsers:
-        '> 0.5%, last 2 versions, Firefox ESR, node >= 18, not dead, not op_mini all',
+        '> 0.5%, last 2 versions, Firefox ESR, node >= 20, not dead, not op_mini all',
       lintAllEsApis: true,
     },
 
     plugins: {
-      '@stylistic/js': stylisticJs,
+      '@stylistic': stylistic,
     },
 
     rules: {
       'curly': ['error', 'multi-line', 'consistent'],
       'eqeqeq': ['error', 'always', { null: 'ignore' }],
-      '@stylistic/js/max-len': [
+      '@stylistic/max-len': [
         'error',
         {
           code: 120,
@@ -56,7 +56,7 @@ export default [
   {
     files: ['scripts/**/*.js'],
     settings: {
-      browsers: 'node >= 18',
+      browsers: 'node >= 20',
     },
   },
 
@@ -72,7 +72,7 @@ export default [
   {
     files: ['test/e2e/**/*.js'],
     settings: {
-      browsers: 'node >= 18',
+      browsers: 'node >= 20',
     },
   },
 
